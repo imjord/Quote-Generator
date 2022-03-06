@@ -6,10 +6,13 @@ let apiQuotes = [];
 var quoteEl = document.getElementById('quote');
 var authorEl = document.getElementById('author');
 var buttonEl = document.getElementById('new-quote');
-
+var twitterEl = document.getElementById('twitter')
 
 //event button 
 buttonEl.addEventListener('click', newQuote);
+
+// tweet button 
+twitterEl.addEventListener('click', tweetQuote);
 
 // show new quote 
 
@@ -22,8 +25,19 @@ function newQuote(){
 
     // display quote to dom 
 
+    if(!quote.author){
+        authorEl.textContent = 'Unknown'
+    } else {
+        authorEl.textContent = quote.author
+    }
+
+    if(quote.text.length > 150) {
+        quoteEl.classList.add('long-quote')
+    } else {
+        quoteEl.classList.remove('long-quote')
+    }
     quoteEl.textContent = quote.text
-    authorEl.textContent = quote.author
+    
 
 
 
@@ -49,6 +63,17 @@ async function getQuotes(){
         alert(error);
     }
 }
+
+
+
+// function to tweet quote 
+function tweetQuote(){
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteEl.
+    textContent} - ${authorEl.textContent}`;
+    window.open(twitterUrl, '_blank');
+}
+
+
 
 // on load 
 
