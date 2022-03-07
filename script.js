@@ -9,42 +9,27 @@ var buttonEl = document.getElementById('new-quote');
 var twitterEl = document.getElementById('twitter')
 var loaderEl = document.getElementById('loader');
 var quoteContainer = document.getElementById('quote-container')
-
-
-
-//event button 
-buttonEl.addEventListener('click', newQuote);
-
-// tweet button 
+//event buttons 
+buttonEl.addEventListener('click', showNewQuote);
 twitterEl.addEventListener('click', tweetQuote);
-
 // functions 
-
-
-// loader
-
-function loader(){
+function showSpinningLoader(){
     loaderEl.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// hide loader 
-function complete(){
+function removeLoader(){
     loaderEl.hidden = true;
     quoteContainer.hidden = false;
 }
 
-// show new quote 
 
-function newQuote(){
-    loader();
+function showNewQuote(){
+    showSpinningLoader();
     // pick a random quote from api quotes array 
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
     console.log(quote)
-
-
     // display quote to dom 
-
     if(!quote.author){
         authorEl.textContent = 'Unknown'
     } else {
@@ -55,52 +40,28 @@ function newQuote(){
         quoteEl.classList.add('long-quote')
     } else {
         quoteEl.classList.remove('long-quote')
-    }
-
-    // set quote , hide loader
-
+    }  
     quoteEl.textContent = quote.text;
-    complete();
-    
-
-
-
-
+    removeLoader();
 }
 
-
-
-
-// get our quotes from the api 
-
-async function getQuotes(){
-    loader();
+async function getQuoteFromApi(){
+    showSpinningLoader();
     const apiUrl = 'https://type.fit/api/quotes';
-    
-
-    // try our fetch 
     try{
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
-        newQuote();
+        showNewQuote();
         
     } catch(error){
-//catch error 
         alert(error);
     }
 }
-
-
-
 // function to tweet quote 
 function tweetQuote(){
     const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteEl.
     textContent} - ${authorEl.textContent}`;
     window.open(twitterUrl, '_blank');
 }
-
-
-
 // on load 
-
-getQuotes();
+getQuoteFromApi();
