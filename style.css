@@ -103,12 +103,36 @@ button:active {
 }
 /* media query: tablet or smaller */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 600px) {
   .quote-container {
-    margin: auto 10px;
+    margin: auto 20px;
+  }
+
+  .button-container {
+    margin: auto 20px;
   }
 
   .quote-text {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body {
+    font-weight: 200;
+    font-family: sans-serif;
+  }
+
+  .quote-container {
+    margin: auto 20px;
+  }
+
+  .button-container {
+    margin: auto 60px;
+    justify-content: center;
+  }
+
+  .quote-text {
+    font-size: 2px;
   }
 }
